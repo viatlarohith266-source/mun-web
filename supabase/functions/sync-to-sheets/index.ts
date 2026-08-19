@@ -18,8 +18,8 @@ const supabase = createClient(
 //   GOOGLE_SHEETS_API_KEY  (a Google API key with Sheets API enabled)
 //   GOOGLE_SHEETS_AMBITUS_SHEET_NAME  (default: "Ambitus Students")
 //   GOOGLE_SHEETS_NON_AMBITUS_SHEET_NAME  (default: "Non-Ambitus Students")
-const SPREADSHEET_ID = Deno.env.get("GOOGLE_SHEETS_SPREADSHEET_ID") ?? "";
-const SHEETS_API_KEY = Deno.env.get("GOOGLE_SHEETS_API_KEY") ?? "";
+const SPREADSHEET_ID = Deno.env.get("GOOGLE_SHEETS_SPREADSHEET_ID") ?? "1whSqh2E8RwJM3iJu_CaTn8b8wvbi1Kx88eymy27-qAU";
+const SHEETS_API_KEY = Deno.env.get("GOOGLE_SHEETS_API_KEY") ?? "AIzaSyBh1b2pTD1Gy4NJl_OJ9Vyr1kDVnyb5lV0";
 const AMBITUS_SHEET = Deno.env.get("GOOGLE_SHEETS_AMBITUS_SHEET_NAME") ?? "Ambitus Students";
 const NON_AMBITUS_SHEET = Deno.env.get("GOOGLE_SHEETS_NON_AMBITUS_SHEET_NAME") ?? "Non-Ambitus Students";
 
