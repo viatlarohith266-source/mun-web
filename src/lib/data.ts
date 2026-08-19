@@ -78,6 +78,11 @@ export const countries = [
   'Canada',
 ];
 
+export const ipcRoles = [
+  'Photographer',
+  'Journalist',
+];
+
 export const personalities = [
   'Narendra Modi (BJP)',
   'Rahul Gandhi (INC)',
@@ -105,6 +110,11 @@ export function isPersonalityCommittee(committee: string): boolean {
   return committee === 'AIPPM';
 }
 
+export function isIPC(committee: string): boolean {
+  return committee === 'IPC';
+}
+
 export function getOptionsForCommittee(committee: string): string[] {
+  if (isIPC(committee)) return ipcRoles;
   return isPersonalityCommittee(committee) ? personalities : countries;
 }

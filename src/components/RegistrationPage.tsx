@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import {
-  committeeNames, isPersonalityCommittee, getOptionsForCommittee,
+  committeeNames, isPersonalityCommittee, isIPC, getOptionsForCommittee,
 } from '../lib/data';
 import awsmunLogo from '../../public/image.png';
 
@@ -65,6 +65,7 @@ function PreferenceBlock({
 
   const options = committee ? getOptionsForCommittee(committee) : [];
   const isPersonality = committee ? isPersonalityCommittee(committee) : false;
+  const isIPCCCommittee = committee ? isIPC(committee) : false;
 
   // Committees already selected in other preference slots
   const allCommittees = [formData.pref1Committee, formData.pref2Committee, formData.pref3Committee];
@@ -96,7 +97,7 @@ function PreferenceBlock({
         </div>
         <div>
           <label className="block text-sm font-medium text-corporate-700 mb-1">
-            {isPersonality ? 'Personality' : 'Country / Personality'}
+            {isIPCCCommittee ? 'Role' : isPersonality ? 'Personality' : 'Country / Personality'}
           </label>
           <select
             value={country}
@@ -107,7 +108,7 @@ function PreferenceBlock({
             className="input-field"
             disabled={!committee}
           >
-            <option value="">{committee ? `Select ${isPersonality ? 'Personality' : 'Country'}` : 'Select committee first'}</option>
+            <option value="">{committee ? `Select ${isIPCCCommittee ? 'Role' : isPersonality ? 'Personality' : 'Country'}` : 'Select committee first'}</option>
             {options.map(c => <option key={c} value={c}>{c}</option>)}
             <option value="__custom__">Other (type your own)</option>
           </select>
@@ -117,14 +118,14 @@ function PreferenceBlock({
       {country === '__custom__' && (
         <div className="mt-3">
           <label className="block text-sm font-medium text-corporate-700 mb-1">
-            {isPersonality ? 'Enter Personality Name' : 'Enter Country / Personality Name'}
+            {isIPCCCommittee ? 'Enter Role' : isPersonality ? 'Enter Personality Name' : 'Enter Country / Personality Name'}
           </label>
           <input
             type="text"
             value={custom}
             onChange={e => updateField(customKey, e.target.value)}
             className={`input-field ${errors[countryKey as string] && !custom.trim() ? 'border-red-500' : ''}`}
-            placeholder={isPersonality ? 'e.g., Amit Shah (BJP)' : 'e.g., South Korea'}
+            placeholder={isIPCCCommittee ? 'e.g., Photographer' : isPersonality ? 'e.g., Amit Shah (BJP)' : 'e.g., South Korea'}
           />
           {errors[countryKey as string] && !custom.trim() && <p className="text-red-500 text-sm mt-1">{errors[countryKey as string]}</p>}
         </div>
@@ -573,8 +574,9 @@ export function RegistrationPage({ onComplete }: RegistrationPageProps) {
 
               <p className="text-corporate-700 text-sm mb-6">
                 Select your top 3 committee and country/personality preferences. For AIPPM, choose from
-                Indian political personalities. You can also type your own country or personality by
-                selecting "Other." Each committee can only be selected once.
+                Indian political personalities. For IPC, choose between Photographer or Journalist.
+                You can also type your own country or personality by selecting "Other." Each committee
+                can only be selected once.
               </p>
 
               <div className="space-y-6">
